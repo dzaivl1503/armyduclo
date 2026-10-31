@@ -77,6 +77,51 @@ public class Image extends lib.Image {
         return new Graphics(null);
     }
 
+    /** MIDP 2.0: doc pixel dang ARGB (0xAARRGGBB). */
+    public void getRGB(int[] rgbData, int offset, int scanlength, int x, int y, int width, int height) {
+        if (rgbData == null) {
+            return;
+        }
+        com.badlogic.gdx.graphics.Pixmap pixmap = this.cachedPixmap;
+        if (pixmap == null || pixmap.isDisposed()) {
+            com.badlogic.gdx.graphics.Texture tex = this.getTexture();
+            if (tex != null) {
+                try {
+                    com.badlogic.gdx.graphics.TextureData textureData = tex.getTextureData();
+                    if (textureData != null && textureData.getType()
+                            == com.badlogic.gdx.graphics.TextureData.TextureDataType.Pixmap) {
+                        if (!textureData.isPrepared()) {
+                            textureData.prepare();
+                        }
+                        pixmap = textureData.consumePixmap();
+                        if (pixmap == null || pixmap.isDisposed()) {
+                            return;
+                        }
+                    }
+                } catch (Throwable throwable) {
+                    return;
+                }
+            }
+        }
+        if (pixmap == null || pixmap.isDisposed()) {
+            return;
+        }
+        try {
+            for (int row = 0; row < height; ++row) {
+                for (int col = 0; col < width; ++col) {
+                    int pixel = pixmap.getPixel(x + col, y + row);
+                    int r = (pixel >>> 24) & 0xFF;
+                    int g = (pixel >>> 16) & 0xFF;
+                    int b = (pixel >>> 8) & 0xFF;
+                    int a = pixel & 0xFF;
+                    rgbData[offset + row * scanlength + col] = (a << 24) | (r << 16) | (g << 8) | b;
+                }
+            }
+        } catch (Throwable throwable) {
+            // ngoai vung / pixmap bi huy: bo qua
+        }
+    }
+
     private static Image wrap(lib.Image base) {
         if (base == null) return null;
         if (base instanceof Image) return (Image) base;

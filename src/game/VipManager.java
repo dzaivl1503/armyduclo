@@ -1,7 +1,5 @@
 package game;
 
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.TextureData;
 import java.io.DataInputStream;
 import java.util.Hashtable;
 import javax.microedition.lcdui.Graphics;
@@ -114,35 +112,21 @@ public final class VipManager {
         if (image == null) {
             return null;
         }
-        Pixmap pixmap = null;
-        boolean ownPixmap = false;
         try {
-            if (image.cachedPixmap != null && !image.cachedPixmap.isDisposed()) {
-                pixmap = image.cachedPixmap;
-            } else if (image.texture != null) {
-                TextureData textureData = image.texture.getTextureData();
-                if (textureData != null && !textureData.isPrepared()
-                        && textureData.getType() == TextureData.TextureDataType.Pixmap) {
-                    textureData.prepare();
-                }
-                if (textureData != null && textureData.getType() == TextureData.TextureDataType.Pixmap) {
-                    pixmap = textureData.consumePixmap();
-                    ownPixmap = true;
-                }
-            }
-            if (pixmap == null) {
+            int w = image.getWidth();
+            int h = image.getHeight();
+            if (w <= 0 || h <= 0) {
                 return image;
             }
-            int w = pixmap.getWidth();
-            int h = pixmap.getHeight();
+            int[] pixels = new int[w * h];
+            image.getRGB(pixels, 0, w, 0, 0, w, h);
             int minX = w;
             int minY = h;
             int maxX = -1;
             int maxY = -1;
             for (int y = 0; y < h; ++y) {
                 for (int x = 0; x < w; ++x) {
-                    int pixel = pixmap.getPixel(x, y);
-                    if ((pixel & 0xFF) <= 16) {
+                    if ((pixels[y * w + x] >>> 24) <= 16) {
                         continue;
                     }
                     if (x < minX) minX = x;
@@ -150,10 +134,6 @@ public final class VipManager {
                     if (y < minY) minY = y;
                     if (y > maxY) maxY = y;
                 }
-            }
-            if (ownPixmap) {
-                pixmap.dispose();
-                ownPixmap = false;
             }
             if (maxX < minX || maxY < minY) {
                 return image;
@@ -168,10 +148,6 @@ public final class VipManager {
         } catch (Throwable throwable) {
             System.out.println("[vip] khong cat duoc vien anh: " + throwable);
             return image;
-        } finally {
-            if (ownPixmap && pixmap != null) {
-                pixmap.dispose();
-            }
         }
     }
 
