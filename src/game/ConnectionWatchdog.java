@@ -51,6 +51,48 @@ public final class ConnectionWatchdog {
         message.void_a();
     }
 
+    /** Xin server gui danh sach pet + 3 slot trang bi pet. */
+    public final void sendPetRequest() {
+        Message message = new Message(PetManager.CMD_PET_INFO);
+        this.var_game_IServerListener_l11llllI.a(message);
+        message.void_a();
+    }
+
+    /** Xin danh sach vip + anh huy hieu. */
+    public final void sendVipRequest() {
+        Message message = new Message(VipManager.CMD_VIP_INFO);
+        this.var_game_IServerListener_l11llllI.a(message);
+        message.void_a();
+    }
+
+    /** Gan pet vao slot trang bi (-1 = bo pet khoi slot). */
+    public final void sendPetSlot(byte by, short s) {
+        Message message = new Message(PetManager.CMD_PET_EQUIP);
+        try {
+            message.java_io_DataOutputStream_a().writeByte(by);
+            message.java_io_DataOutputStream_a().writeShort(s);
+        }
+        catch (Exception exception) {
+            // bo qua
+        }
+        this.var_game_IServerListener_l11llllI.a(message);
+        message.void_a();
+    }
+
+    /** Dung trang bi pet: itemId, petId (-1 = thao ra). */
+    public final void sendPetItemUse(short itemId, short petId) {
+        Message message = new Message(PetManager.CMD_PET_ITEM_USE);
+        try {
+            message.java_io_DataOutputStream_a().writeShort(itemId);
+            message.java_io_DataOutputStream_a().writeShort(petId);
+        }
+        catch (Exception exception) {
+            // bo qua
+        }
+        this.var_game_IServerListener_l11llllI.a(message);
+        message.void_a();
+    }
+
     public final void a(byte by) {
         Message message = new Message(7);
         try {

@@ -30,6 +30,7 @@ implements IActionListener {
             vector.addElement(new GameCommand(StringUtils.ax(), new ActionListener293(this)));
         }
         vector.addElement(new GameCommand(StringUtils.R(), new ActionListener294(this)));
+        vector.addElement(new GameCommand("Pet", new ActionListener310(this.a)));
         GameCanvas.var_game_GameHelper10_a.a(vector, 0);
     }
 }

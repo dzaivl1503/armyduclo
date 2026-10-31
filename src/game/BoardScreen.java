@@ -392,6 +392,7 @@ extends BaseScreen {
                 }
                 BoardScreen.a(graphics, ((PlayerAccountInfo)object).g, this.var_int_arr_lIII1III11I[n], this.var_int_arr_llI1lI1Il[n] - 15, 3);
                 (var_byte_b != 5 && n % 2 == 0 ? FontRenderer.g : FontRenderer.h).a(graphics, ((PlayerAccountInfo)object).var_java_lang_String_a, this.var_int_arr_lIII1III11I[n], this.var_int_arr_llI1lI1Il[n] + 15, 2);
+                VipManager.drawAfterName(graphics, (var_byte_b != 5 && n % 2 == 0 ? FontRenderer.g : FontRenderer.h), ((PlayerAccountInfo)object).var_java_lang_String_a, ((PlayerAccountInfo)object).var_int_a, this.var_int_arr_lIII1III11I[n], this.var_int_arr_llI1lI1Il[n] + 15);
                 if (((PlayerAccountInfo)object).var_boolean_b && ((PlayerAccountInfo)object).var_int_a != this.var_int_llI1lI1Il) {
                     FontRenderer.e.a(graphics, "ok", this.var_int_arr_lIII1III11I[n], this.var_int_arr_llI1lI1Il[n] - 32, 2);
                 }
@@ -410,6 +411,7 @@ extends BaseScreen {
                 }
                 BoardScreen.a(graphics, ((PlayerAccountInfo)object).g, this.var_int_arr_lIII1III11I[0], this.var_int_arr_llI1lI1Il[0] - 15, 3);
                 (n % 2 != 0 ? FontRenderer.h : FontRenderer.g).a(graphics, ((PlayerAccountInfo)object).var_java_lang_String_a, this.var_int_arr_lIII1III11I[0], this.var_int_arr_llI1lI1Il[0] + 15, 2);
+                VipManager.drawAfterName(graphics, (n % 2 != 0 ? FontRenderer.h : FontRenderer.g), ((PlayerAccountInfo)object).var_java_lang_String_a, ((PlayerAccountInfo)object).var_int_a, this.var_int_arr_lIII1III11I[0], this.var_int_arr_llI1lI1Il[0] + 15);
                 if (((PlayerAccountInfo)object).var_boolean_b && ((PlayerAccountInfo)object).var_int_a != this.var_int_llI1lI1Il) {
                     FontRenderer.e.a(graphics, "ok", this.var_int_arr_lIII1III11I[0], this.var_int_arr_llI1lI1Il[0] - 32, 2);
                 }
@@ -638,6 +640,7 @@ extends BaseScreen {
     }
 
     public void f() {
+        VipManager.request();
         for (int i = 0; i < this.var_java_util_Vector_a.size(); ++i) {
             PlayerAccountInfo playerAccountInfo = (PlayerAccountInfo)this.var_java_util_Vector_a.elementAt(i);
             playerAccountInfo.var_boolean_b = playerAccountInfo.var_int_a == this.var_int_llI1lI1Il;

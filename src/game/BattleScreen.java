@@ -210,11 +210,18 @@ extends BaseScreen {
 
     public static void f() {
         GameHelper34.var_java_util_Vector_a.removeAllElements();
+        BattlePet.reset();
         System.gc();
     }
 
     public final void a(byte by, short[] sArray, short[] sArray2, int[] nArray, int n) {
         var_boolean_g = false;
+        BattlePet.reset();
+        BattleManager.deferredNextPlayer = -1;
+        BattlePet.startWatchdog();
+        PetManager.requestSync();
+        System.out.println("[pet] vao tran: so pet trang bi=" + PetManager.equippedCount()
+                + " myIndex=" + BattleScreen.var_byte_b);
         this.l1II111I1 = false;
         var_java_lang_String_a = "";
         this.var_int_lll1IIlI1l11 = 3;
@@ -627,6 +634,12 @@ extends BaseScreen {
         var_game_GameHelper16_a.a();
         var_game_CharacterSelectScreen_a.a();
         GameHelper34.c();
+        BattlePet.update();
+        BattleManager.applyDeferredNextPlayer();
+        VipManager.request();
+        if ((++BattlePet.heartbeat % 90) == 0) {
+            System.out.println("[hb] tick " + BattlePet.debugState());
+        }
         n2 = 0;
         boolean bl = false;
         for (n = 0; n < BattleManager.var_game_PlayerEntity_arr_a.length; ++n) {
@@ -833,6 +846,7 @@ extends BaseScreen {
             if (object == null) continue;
             ((PlayerEntity)object).a(graphics);
         }
+        BattlePet.draw(graphics);
         var_game_BattleGraphicHelper_a.a(graphics);
         var_game_CharacterSelectScreen_a.a(graphics);
         if (!var_boolean_i && GameHelper34.var_boolean_a) {
@@ -1037,6 +1051,7 @@ extends BaseScreen {
         }
         if (BattleManager.game_PlayerEntity_a() != null && (string = BattleManager.game_PlayerEntity_a().var_java_lang_String_a) != null && !(BattleManager.game_PlayerEntity_a() instanceof PopupDialog)) {
             (BattleManager.game_PlayerEntity_a().var_boolean_b ? FontRenderer.g : FontRenderer.h).a(graphics, string, GameCanvas.var_int_b - 16, (GameCanvas.var_boolean_d ? 25 : 0) + 22, 2);
+            VipManager.drawAfterName(graphics, (BattleManager.game_PlayerEntity_a().var_boolean_b ? FontRenderer.g : FontRenderer.h), string, BattleManager.game_PlayerEntity_a().var_int_vipUserId, GameCanvas.var_int_b - 16, (GameCanvas.var_boolean_d ? 25 : 0) + 22);
         }
         graphics.setClip(0, 0, GameCanvas.var_int_b, GameCanvas.var_int_c);
         if (GameHelper16.var_byte_a == 0) {

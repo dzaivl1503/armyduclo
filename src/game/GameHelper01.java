@@ -116,6 +116,18 @@ implements INetworkCallback {
             if (object != null) {
                 try {
                     switch (((Message)object).a) {
+                        case -110: {
+                            PetManager.handlePetInfo((Message)object);
+                            return;
+                        }
+                        case -111: {
+                            PetManager.handlePetSlots((Message)object);
+                            return;
+                        }
+                        case -109: {
+                            VipManager.handleVipInfo((Message)object);
+                            return;
+                        }
                         case -98: {
                             BauCuaHandler.handleMessage((Message)object);
                             return;

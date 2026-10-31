@@ -160,5 +160,25 @@ public final class FontRenderer {
     public final int a() {
         return this.var_int_II11IIII;
     }
+
+    /** Do rong that khi ve: tinh ca khoang cach giua ky tu (giong vong lap ve chu). */
+    public final int b(String string) {
+        if (string == null || string.length() == 0) {
+            return 0;
+        }
+        int n = 0;
+        int n2 = string.length();
+        for (int i = 0; i < n2; ++i) {
+            int n3 = this.var_java_lang_String_II11IIII.indexOf(string.charAt(i));
+            if (n3 == -1) {
+                n3 = 0;
+            }
+            n += this.var_byte_arr_II11IIII[n3];
+            if (i < n2 - 1) {
+                n += this.II1I11Il;
+            }
+        }
+        return n;
+    }
 }
 

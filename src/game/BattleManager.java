@@ -47,6 +47,7 @@ public final class BattleManager {
                     BattleManager.var_game_PlayerEntity_arr_a[n] = new PopupDialog(playerAccountInfo.var_int_a, (byte)n, sArray[n], sArray2[n], bl, n % 2 != 0 ? 0 : 2, playerAccountInfo.var_byte_a, nArray[n]);
                 }
                 BattleManager.var_game_PlayerEntity_arr_a[n].var_java_lang_String_a = playerAccountInfo.var_java_lang_String_a;
+                BattleManager.var_game_PlayerEntity_arr_a[n].var_int_vipUserId = playerAccountInfo.var_int_a;
                 BattleManager.var_game_PlayerEntity_arr_a[n].M = playerAccountInfo.g;
                 if (!bl) {
                     BattleManager.var_game_PlayerEntity_arr_a[n].var_int_arr_a = BoardScreen.var_game_BoardScreen_a.int_arr_b();
@@ -138,8 +139,37 @@ public final class BattleManager {
         return var_byte_a == BattleScreen.var_byte_b;
     }
 
+    /** Luot bi hoan lai cho pet danh xong (-1 = khong co). */
+    public static byte deferredNextPlayer = -1;
+    private static long deferredAt = 0L;
+
+    /** Goi moi frame sau BattlePet.update(): ap dung luot da hoan khi pet da xong. */
+    public static void applyDeferredNextPlayer() {
+        if (deferredNextPlayer < 0) {
+            return;
+        }
+        if (BattlePet.isBusy()) {
+            // con pet dang bay/danh/ve thi chua chuyen luot
+            if (System.currentTimeMillis() - deferredAt < 15000L) {
+                return;
+            }
+            BattlePet.reset();
+        }
+        byte by = deferredNextPlayer;
+        deferredNextPlayer = -1;
+        System.out.println("[pet] pet danh xong het -> chuyen luot " + by);
+        a(by);
+    }
+
     public static void a(byte by) {
         System.out.println("[cp] SET NEXT PLAYER " + by);
+        if (BattlePet.isBusy()) {
+            // pet chua danh xong: hoan luot, khong chan thread (chan thread se lam treo game)
+            deferredNextPlayer = by;
+            deferredAt = System.currentTimeMillis();
+            System.out.println("[pet] hoan luot " + by + " cho pet danh xong het");
+            return;
+        }
         if (BattleScreen.var_java_lang_String_a.equals("")) {
             if (by >= 0 && by < var_game_PlayerEntity_arr_a.length && var_game_PlayerEntity_arr_a[by] != null) {
                 BattleManager.var_game_PlayerEntity_arr_a[by].var_boolean_v = true;
@@ -213,15 +243,17 @@ public final class BattleManager {
     }
 
     public static void c(int n, short s, short s2) {
-        if (n >= 0 && n < var_game_PlayerEntity_arr_a.length && var_game_PlayerEntity_arr_a[n] != null) {
-            BattleManager.var_game_PlayerEntity_arr_a[n].var_int_g = s;
-            BattleManager.var_game_PlayerEntity_arr_a[n].var_int_h = s2;
-            BattleManager.var_game_PlayerEntity_arr_a[n].var_short_a = s;
-            BattleManager.var_game_PlayerEntity_arr_a[n].var_int_y = s;
-            BattleManager.var_game_PlayerEntity_arr_a[n].var_int_z = s2;
-            if (n == BattleScreen.var_byte_b) {
-                var_game_PlayerEntity_arr_a[n].c(s, s2);
-            }
+        if (n < 0 || n >= var_game_PlayerEntity_arr_a.length || var_game_PlayerEntity_arr_a[n] == null) {
+            return;
+        }
+        // server luon nhan vi tri client gui nen echo ve phai bang vi tri hien tai; van ap dung
+        BattleManager.var_game_PlayerEntity_arr_a[n].var_int_g = s;
+        BattleManager.var_game_PlayerEntity_arr_a[n].var_int_h = s2;
+        BattleManager.var_game_PlayerEntity_arr_a[n].var_short_a = s;
+        BattleManager.var_game_PlayerEntity_arr_a[n].var_int_y = s;
+        BattleManager.var_game_PlayerEntity_arr_a[n].var_int_z = s2;
+        if (n == BattleScreen.var_byte_b) {
+            var_game_PlayerEntity_arr_a[n].c(s, s2);
         }
     }
 }

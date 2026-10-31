@@ -69,7 +69,7 @@ extends MIDlet {
             System.out.println("[coreLG/TerrainMidlet] PROVIDER= " + providerId);
         }
         catch (Exception exception) {}
-        serverHost = "160.191.242.130";
+        serverHost = "127.0.0.1";
         serverPort = 19129;
         GameHelper01.d().a(ServerManager.game_ServerManager_a());
         object = MessageHandler.game_MessageHandler_a();
@@ -80,9 +80,9 @@ extends MIDlet {
     public static void fetchAndSaveServerList() {
         GameCanvas.c(StringUtils.ds());
         ServerInfo.var_java_lang_String_arr_a = new String[]{"Tuổi Thơ"};
-        ServerInfo.var_java_lang_String_arr_b = new String[]{"160.191.242.130"};
+        ServerInfo.var_java_lang_String_arr_b = new String[]{"127.0.0.1"};
         ServerInfo.var_short_arr_a = new short[]{(short)19129};
-        serverHost = "160.191.242.130";
+        serverHost = "127.0.0.1";
         serverPort = 19129;
         TerrainMidlet.I11Il1ll();
         GameCanvas.d();
@@ -109,9 +109,9 @@ extends MIDlet {
 
     public static void loadServerList() {
         ServerInfo.var_java_lang_String_arr_a = new String[]{"Tuổi Thơ"};
-        ServerInfo.var_java_lang_String_arr_b = new String[]{"160.191.242.130"};
+        ServerInfo.var_java_lang_String_arr_b = new String[]{"127.0.0.1"};
         ServerInfo.var_short_arr_a = new short[]{(short)19129};
-        serverHost = "160.191.242.130";
+        serverHost = "127.0.0.1";
         serverPort = 19129;
         TerrainMidlet.I11Il1ll();
     }
@@ -239,7 +239,7 @@ extends MIDlet {
 
     static {
         serverPort = 19129;
-        serverHost = "160.191.242.130";
+        serverHost = "127.0.0.1";
         isVip = new boolean[10];
         var_int_l1IIlIll = 100;
         version = "2.4.2";

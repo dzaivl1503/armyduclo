@@ -97,6 +97,8 @@ public class PlayerEntity {
     private int var_int_lIl11lIll1;
     private int var_int_I11IlllI1;
     public int var_int_s = 5;
+    /** user_id trong DB: dung de tra cuu huy hieu VIP. */
+    public int var_int_vipUserId = -1;
     private int var_int_IlI1IIllllI;
     public int var_int_t;
     private int var_int_llIIIIllll1 = this.var_int_t = 2;
@@ -1200,6 +1202,8 @@ public class PlayerEntity {
                             } else {
                                 (this.var_boolean_b ? FontRenderer.g : FontRenderer.h).a(graphics, this.var_java_lang_String_a, this.var_int_g, this.var_int_h - 44, 2);
                             }
+                            // huy hieu vip: ve ngoai dieu kien nhay de khong nhay theo ten
+                            VipManager.drawAfterName(graphics, this.var_boolean_b ? FontRenderer.g : FontRenderer.h, this.var_java_lang_String_a, this.var_int_vipUserId, this.var_int_g, this.var_int_h - 44);
                             byte by = (byte)(this.var_byte_c == 10 ? 35 : 27);
                             BoardScreen.a(graphics, this.M, this.var_int_g, this.var_int_h - by, 3);
                         }
@@ -1575,6 +1579,10 @@ public class PlayerEntity {
 
     public final void a(int n, byte by) {
         System.out.println("[co] UPDATE HP nexHP= " + n);
+        if (n < this.var_int_w && this.var_byte_b != BattleScreen.var_byte_b) {
+            // danh trung dich -> pet moi lao len danh
+            BattlePet.onHitLanded(this.var_byte_b);
+        }
         boolean bl = true;
         this.var_boolean_llIIIIllll1 = true;
         this.var_int_L = by;

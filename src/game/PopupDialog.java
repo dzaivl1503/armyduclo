@@ -163,16 +163,21 @@ extends PlayerEntity {
                     this.IIIll11ll1I1 = -4;
                 }
                 if (this.var_int_t == 0) {
-                    this.var_int_h = -this.var_int_h;
+                    this.var_int_H = -this.var_int_H;
                 }
-                int n2 = this.var_int_g - this.IIIll11ll1I1 + (this.var_int_s != 1 && this.var_int_s != 2 ? 0 : this.var_int_h);
+                int n2 = this.var_int_g - this.IIIll11ll1I1 + (this.var_int_s != 1 && this.var_int_s != 2 ? 0 : this.var_int_H);
                 int n3 = this.var_int_h - 10 + this.lIlIIIIIl + (this.var_int_s != 2 && this.var_int_s != 3 ? 0 : this.var_int_I);
-                int n4 = this.var_int_g + this.l11lIIIII1 + (this.var_int_s != 1 && this.var_int_s != 2 ? 0 : this.var_int_h);
+                int n4 = this.var_int_g + this.l11lIIIII1 + (this.var_int_s != 1 && this.var_int_s != 2 ? 0 : this.var_int_H);
                 int n5 = this.var_int_h - 15 + this.lIlIIIIIl + this.lIIlllIl + (this.var_int_s != 2 && this.var_int_s != 3 ? 0 : this.var_int_I);
-                DataUtils.a(graphics, PlayerEntity.var_javax_microedition_lcdui_Image_v, 0, 30 * this.var_byte_e, 42, 30, n, n2, n3, 33);
-                DataUtils.a(graphics, PlayerEntity.var_javax_microedition_lcdui_Image_w, 0, 25 * this.var_byte_f, 44, 25, n, this.var_int_g, this.var_int_h, 33);
+                DataUtils.a(graphics, PlayerEntity.var_javax_microedition_lcdui_Image_v, 0, 30 * this.var_int_e, 42, 30, n, n2, n3, 33);
+                DataUtils.a(graphics, PlayerEntity.var_javax_microedition_lcdui_Image_w, 0, 25 * this.var_int_f, 44, 25, n, this.var_int_g, this.var_int_h, 33);
                 if (this.var_int_s == 0 || this.var_int_s == 6) {
                     this.var_int_s = 1;
+                }
+                // kep frame sung vao so frame that cua bug_gun.png
+                int n6 = this.var_game_GameHelper29_a.a;
+                if (n6 > 0) {
+                    this.var_int_s = (this.var_int_s % n6 + n6) % n6;
                 }
                 this.var_game_GameHelper29_a.a(this.var_int_s, n4, n5, this.var_int_t, 33, graphics);
                 this.lI1Il1ll1l(graphics, 50);
