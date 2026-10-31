@@ -69,7 +69,7 @@ implements IPacketListener {
     }
 
     public static String java_lang_String_a() {
-        return "160.191.242.130:19128";
+        return "103.178.235.112:19129";
     }
 
     public final void void_a() {
