@@ -79,7 +79,7 @@ extends MIDlet {
 
     public static void fetchAndSaveServerList() {
         GameCanvas.c(StringUtils.ds());
-        ServerInfo.var_java_lang_String_arr_a = new String[]{"sever tuat duc"};
+        ServerInfo.var_java_lang_String_arr_a = new String[]{"Tuat Duc"};
         ServerInfo.var_java_lang_String_arr_b = new String[]{"103.178.235.112"};
         ServerInfo.var_short_arr_a = new short[]{(short)19129};
         serverHost = "103.178.235.112";
@@ -108,7 +108,7 @@ extends MIDlet {
     }
 
     public static void loadServerList() {
-        ServerInfo.var_java_lang_String_arr_a = new String[]{"sever tuat duc"};
+        ServerInfo.var_java_lang_String_arr_a = new String[]{"Tuat Duc"};
         ServerInfo.var_java_lang_String_arr_b = new String[]{"103.178.235.112"};
         ServerInfo.var_short_arr_a = new short[]{(short)19129};
         serverHost = "103.178.235.112";
